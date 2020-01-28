@@ -8,13 +8,13 @@ from models import storage
 app = Flask(__name__)
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status', methods=['GET'])
 def status():
     """ return a JSON """
-    return jsonify({"status": "OK"}), 200
+    return jsonify({"status": "OK"})
 
 
-@app_view.route('/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'])
 def stats():
     """ Retrives the number of each objects by type:"""
     o = {
