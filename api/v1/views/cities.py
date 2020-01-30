@@ -29,4 +29,9 @@ def delete_city(city_id):
     return delete_model(model, city_id)
 
 
-
+@app_views.route("/states/<state_id>/cities", strict_slashes=False,
+                 methods=["POST"])
+def post_city(state_id):
+    """POST /cities api route"""
+    required_data = {"name"}
+    return post_model(model, parent_model, state_id, required_data)
