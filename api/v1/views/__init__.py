@@ -43,16 +43,14 @@ def post_model(model, parent_model, parent_model_id, required_data):
 
     data = request.get_json(force=True, silent=True)
     if not data:
-        # return make_response(jsonify({"error": "Not a JSON"}), 400)
         abort(400, 'Not a JSON')
 
     for requirement in required_data:
         if requirement not in data:
             message = "Missing " + requirement
-            # return make_response(jsonify({"error": message}), 400)
             abort(400, message)
 
-    if "user_id" in required_data:  # TODO: does this work?
+    if "user_id" in required_data:
         if not storage.get("User", data.get("user_id")):
             return make_response(jsonify({"error": "Not found"}), 404)
 
@@ -70,7 +68,6 @@ def put_model(model, model_id, ignore_data):
 
     data = request.get_json(force=True, silent=True)
     if not data:
-        # return make_response(jsonify({"error": "Not a JSON"}), 400)
         abort(400, 'Not a JSON')
 
     for key, value in data.items():
