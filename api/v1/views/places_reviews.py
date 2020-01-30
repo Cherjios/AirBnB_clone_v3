@@ -1,30 +1,29 @@
 #!/usr/bin/python3
-"""Module for  Reviw object that handles all default
-   RestFul API actions"""
+"""Module for Place related endpoints"""
 from api.v1.views import app_views
 from api.v1.views import *
 from flask import jsonify, make_response, abort, request
-from modles import storage
+from models import storage
 from models.review import Review
 
 model = "Review"
 parent_model = "Place"
 
 
-@app_views.route('/places/<place_id>/reviews', strict_slashes=False,
+@app_views.route("/places/<place_id>/reviews", strict_slashes=False,
                  methods=["GET"])
 def get_reviews(place_id):
-    """GET/place api route"""
+    """GET /place api route"""
     return get_models(parent_model, place_id, "reviews")
 
 
-@app_views.route('/reviews/<review_id>', methods=['GET'])
+@app_views.route("/reviews/<review_id>", methods=["GET"])
 def get_review(review_id):
-    """GET/review api route"""
+    """GET /review api route"""
     return get_model(model, review_id)
 
 
-@app_views.route('/reviews/<review_id>', methods=['DELETE'])
+@app_views.route("/reviews/<review_id>", methods=["DELETE"])
 def delete_review(review_id):
     """DELETE /review api route"""
     return delete_model(model, review_id)
