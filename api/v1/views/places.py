@@ -15,8 +15,8 @@ def all_places(city_id):
     city = storage.get("City", city_id)
     if not city:
         abort(404)
-    places_dict_list = [place.to_dict() for place in city.places]
-    return jsonify(places_dict_list)
+    place_list = [place.to_dict() for place in city.places]
+    return jsonify(place_list)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'],
@@ -48,18 +48,18 @@ def create_place(city_id):
     city = storage.get("City", city_id)
     if not city:
         abort(404)
-    body = request.get_json()
-    if not body:
+    json_file = request.get_json()
+    if not json_file:
         abort(400, "Not a JSON")
-    if body.get("user_id") is None:
+    if json_file.get("user_id") is None:
         abort(400, "Missing user_id")
-    if body.get("name") is None:
+    if json_file.get("name") is None:
         abort(400, "Missing name")
-    user = storage.get("User", body['user_id'])
+    user = storage.get("User", json_file['user_id'])
     if not user:
         abort(404)
-    body['city_id'] = city_id
-    place = Place(**body)
+    json_file['city_id'] = city_id
+    place = Place(**json_file)
     place.save()
     return jsonify(place.to_dict()), 201
 
@@ -69,14 +69,13 @@ def create_place(city_id):
 def update_place(place_id):
     """ Method updates a place object based off its id """
     place = storage.get("Place", place_id)
-    body = request.get_json()
+    json_file = request.get_json()
     if not place:
         abort(404)
-    if not body:
+    if not json_file:
         abort(400, "Not a JSON")
-    for k, v in body.items():
-        if k not in ["id", "user_id", "city_id",
-                     "created_at", "updated_at"]:
-            setattr(place, k, v)
+    for key, value in json_file.items():
+        if key not in ["id", "user_id", "city_id", "created_at", "updated_at"]:
+            setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict())
