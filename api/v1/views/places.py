@@ -59,11 +59,11 @@ def create_place(city_id=None):
 
     json_file = request.get_json()
     if not json_file:
-        return jsonify({"error": "Not a JSON"}), 400
-    if not json_file.get("name"):
-        return jsonify({"error": "Missing name"}), 400
-    if not json_file.get("user_id"):
-        return jsonify({"error": "Missing user_id"}), 400
+        abort(400, "Not a JSON")
+    if json_file.get("user_id") is None:
+        abort(400, "Missing user_id")
+    if json_file.get("name") is None:
+        abort(400, "Missing name")
 
     user = storage.get("User", body['user_id'])
     if not user:
@@ -88,5 +88,5 @@ def update_place(place_id=None):
     for key, value in json_file.items():
         if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
             setattr(place, key, value)
-    storage.save()
-    return jsonify(place_obj.to_dict()), 200
+    place.save()
+    return jsonify(place.to_dict()), 200
