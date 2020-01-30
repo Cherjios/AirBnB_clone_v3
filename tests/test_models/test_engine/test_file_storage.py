@@ -84,8 +84,8 @@ test_file_storage.py'])
         state.save()
         new_c1 = models.storage.count()
         new_c2 = models.storage.count("State")
-        self.assertEqual(c1, new_c1 -1)
-        self.assertEqual(c1, new_c1 -1)
+        self.assertEqual(c1, new_c1 - 1)
+        self.assertEqual(c1, new_c1 - 1)
 
 
 class TestFileStorage(unittest.TestCase):
