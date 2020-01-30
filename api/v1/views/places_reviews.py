@@ -5,7 +5,7 @@ from api.v1.views import app_views
 from api.v1.views import *
 from flask import jsonify, make_response, abort, request
 from modles import storage
-from models. review import Review
+from models.review import Review
 
 model = "Review"
 parent_model = "Place"
@@ -13,7 +13,7 @@ parent_model = "Place"
 
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False,
                  methods=["GET"])
-def get_reviews(plade_id):
+def get_reviews(place_id):
     """GET/place api route"""
     return get_models(parent_model, place_id, "reviews")
 
