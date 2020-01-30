@@ -35,3 +35,10 @@ def post_city(state_id):
     """POST /cities api route"""
     required_data = {"name"}
     return post_model(model, parent_model, state_id, required_data)
+
+
+@app_views.route("/cities/<city_id>", methods=["PUT"])
+def put_city(city_id):
+    """PUT /cities api route"""
+    ignore_data = ["id", "created_at", "updated_at"]
+    return put_model(model, city_id, ignore_data)
