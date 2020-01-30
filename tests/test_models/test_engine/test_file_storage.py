@@ -79,10 +79,13 @@ test_file_storage.py'])
     def test_count(self):
         """Test if count method is correctly count the objects in storage"""
         c1 = models.storage.count()
+        c2 = models.storage.count("State")
         state = State(name="California")
         state.save()
-        c2 = models.storage.count()
-        self.assertNotEqual(c1, c2)
+        new_c1 = models.storage.count()
+        new_c2 = models.storage.count("State")
+        self.assertEqual(c1, new_c1 - 1)
+        self.assertEqual(c1, new_c1 - 1)
 
 
 class TestFileStorage(unittest.TestCase):

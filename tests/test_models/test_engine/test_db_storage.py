@@ -69,20 +69,23 @@ test_db_storage.py'])
 
     def test_get(self):
         """Test if get method works correctly"""
-        t1 = models.storage.get(None, None)
-        self.assertEqual(t1, None)
-        t2 = State(name="California")
+        t = models.storage.get(None, None)
+        self.assertEqual(t, None)
+        t2 = State(name='California')
         t2.save()
-        t1 = models.storage.get("State", t2.id)
+        t1 = models.storage.get('State', t2.id)
         self.assertEqual(t1, t2)
 
     def test_count(self):
         """Test if count method is correctly count the objects in storage"""
         c1 = models.storage.count()
+        c2 = models.storage.count('State')
         state = State(name="California")
         state.save()
-        c2 = models.storage.count()
-        self.assertNotEqual(c1, c2)
+        new_c1 = models.storage.count()
+        new_c2 = models.storage.count('State')
+        self.assertEqual(c1, new_c1 - 1)
+        self.assertEqual(c2, new_c2 - 1)
 
 
 class TestFileStorage(unittest.TestCase):
