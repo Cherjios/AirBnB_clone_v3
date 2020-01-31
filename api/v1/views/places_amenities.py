@@ -38,7 +38,7 @@ def delete_amenity(place_id, amenity_id):
     if amenity not in place.amenities:
         return make_response(jsonify({"error": "Not found"}), 404)
     place.amenities.remove(amenity)
-    
+
     storage.save()
     return make_response(jsonify({}), 200)
 
